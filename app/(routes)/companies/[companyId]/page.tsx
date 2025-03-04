@@ -4,7 +4,11 @@ import {redirect} from "next/navigation"
 import {Header} from "./component/Header"
 import { FooterCompany } from "./component/FooterCompany"
 import { CompanyInfomation } from "./component/CompanyInfomation"
-export default  async function CompanyIdPage({params}: {params: {companyId: string}}) {
+
+interface CompanyIdPageProps {
+    params: { companyId: string };
+  }
+export default async function CompanyIdPage({params}: CompanyIdPageProps) {
     const {userId} = await auth()
 
     if(!userId) {
