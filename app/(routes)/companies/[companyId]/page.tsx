@@ -5,30 +5,33 @@ import {Header} from "./component/Header"
 import { FooterCompany } from "./component/FooterCompany"
 import { CompanyInfomation } from "./component/CompanyInfomation"
 
-interface CompanyIdPageProps {
+export default async function CompanyIdPage({
+    params,
+  }: {
     params: { companyId: string };
-  }
-export default async function CompanyIdPage({params}: CompanyIdPageProps) {
-    const {userId} = await auth()
-
-    if(!userId) {
-        return redirect("/")
+  }) {
+    const { userId } = await auth();
+  
+    if (!userId) {
+      return redirect("/");
     }
+  
     const company = await db.company.findUnique({
-        where: {
-            id: params.companyId,
-            userId
-        }
-    })
-    if(!company) {
-        return redirect("/")
+      where: {
+        id: params.companyId,
+        userId,
+      },
+    });
+  
+    if (!company) {
+      return redirect("/");
     }
-
-  return (
-    <div>
-        <Header/>
-        <CompanyInfomation company={company}/>
-        <FooterCompany companyId={company.id}/>
-    </div>
-  )
-}
+  
+    return (
+      <div>
+        <Header />
+        <CompanyInfomation company={company} />
+        <FooterCompany companyId={company.id} />
+      </div>
+    );
+  }
