@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Company {
+  id          String  @id @default(cuid())
+  userId      String
+  name        String  @db.VarChar(100)
+  rut         String? @unique @db.VarChar(20)
+  description String? @db.VarChar(255)
+  country     String  @db.VarChar(50)
+  address     String? @db.VarChar(255)
+  website     String  @db.VarChar(100)
+  phone       String  @db.VarChar(50)
+
+  contacts Contact[]
+  events   Event[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Contact {
+  id        String @id @default(cuid())
+  companyId String @map("company_id") @db.VarChar(100)
+  name      String @db.VarChar(100)
+  role      String @db.VarChar(50)
+  email     String @unique @db.VarChar(50)
+  phone     String @db.VarChar(50)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company? @relation(fields: [companyId], references: [id])
+
+  @@index([companyId])
+}
+
+model Event {
+  id         String   @id @default(cuid())
+  companyId  String   @map("company_id") @db.VarChar(100)
+  title      String   @db.VarChar(100)
+  start      DateTime
+  allDay     Boolean
+  timeFormat String   @db.VarChar(50)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company Company? @relation(fields: [companyId], references: [id])
+
+  @@index([companyId])
+}

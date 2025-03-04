@@ -2,20 +2,138 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+html,
+body,
+root {
+  height: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Calendar buttons  */
+.calendar-container .fc .fc-button-primary {
+  background-color: hsl(var(--popover));
+  color: hsl(var(--accent-foreground));
+}
+
+.fc-button {
+  border: 1px solid hsl(var(--accent)) !important; /* Mantiene el tamaño fijo */
+  box-shadow: none !important;
+  padding: 6px 12px !important;
+}
+ 
+.fc-button:focus {
+  background-color: hsl(var(--primary)) !important; 
+  color: hsl(var(--primary-foreground)) !important;
+  outline: none !important;
+  cursor: pointer;
+}
+
+.calendar-container .fc .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+/* Clendar Border */
+.calendar-container td, .calendar-container th, .calendar-container table, .calendar-container, .calendar-container .fc .fc-multimonth, .fc-listMonth-view.fc-view.fc-list.fc-list-sticky{
+  border-color: hsl(var(--border)) !important;
+}
+
+/* Calendar general  */
+.calendar-container .fc .fc-multimonth-daygrid-table, .calendar-container .fc .fc-multimonth-title, .calendar-container .fc .fc-multimonth-header-table, .fc-list-empty, .fc-list-day-cushion.fc-cell-shaded {
+  background-color: hsl(var(--background)) !important;
+}
+.fc-list-event:hover{
+  color: hsl(var(--background)) !important;
+  cursor: pointer;
+}
+.fc-day-today {
+  position: relative; 
+  background-color: transparent !important;
+}
+
+.fc-day-today::after {
+  content: ''; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: hsl(var(--primary)) !important; 
+  opacity: 0.1; 
+  z-index: 1; 
+}
+@media (max-width: 980px) {
+  .calendar-container .fc .fc-header-toolbar.fc-toolbar.fc-toolbar-ltr {
+    display: flex;
+    flex-direction: column;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+
+@layer base {
+  :root {
+    --background: 229 57% 100%;
+    --foreground: 229 63% 4%;
+    --muted: 229 12% 86%;
+    --muted-foreground: 229 10% 37%;
+    --popover: 0 0% 99%;
+    --popover-foreground: 229 63% 3%;
+    --card: 0 0% 99%;
+    --card-foreground: 229 63% 3%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --primary: 229 100% 62%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 229 20% 90%;
+    --secondary-foreground: 229 20% 30%;
+    --accent: 229 28% 85%;
+    --accent-foreground: 229 28% 25%;
+    --destructive: 3 100% 50%;
+    --destructive-foreground: 3 0% 100%;
+    --ring: 229 100% 62%;
+    --chart-1: 229 100% 62%;
+    --chart-2: 229 20% 90%;
+    --chart-3: 229 28% 85%;
+    --chart-4: 229 20% 93%;
+    --chart-5: 229 103% 62%;
+    --radius: 0.4rem;
+  }
+
+  .dark {
+    --background: 229 41% 4%;
+    --foreground: 229 23% 99%;
+    --muted: 229 12% 14%;
+    --muted-foreground: 229 10% 63%;
+    --popover: 229 41% 5%;
+    --popover-foreground: 0 0% 100%;
+    --card: 229 41% 5%;
+    --card-foreground: 0 0% 100%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --primary: 229 100% 62%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 229 14% 8%;
+    --secondary-foreground: 229 14% 68%;
+    --accent: 229 23% 17%;
+    --accent-foreground: 229 23% 77%;
+    --destructive: 3 89% 54%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 229 100% 62%;
+    --chart-1: 229 100% 62%;
+    --chart-2: 229 14% 8%;
+    --chart-3: 229 23% 17%;
+    --chart-4: 229 14% 11%;
+    --chart-5: 229 103% 62%;
+  }
 }
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
