@@ -73,7 +73,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
       name: company.name,
       country: company.country,
       website: company.website,
-      rut: company.rut,
+      rut: company.rut ?? "",
       phone: company.phone,
       description: company.description ?? "",
     },

@@ -6,7 +6,7 @@ import {ListIntegrations } from "./component/ListIntegrations"
 import { UsersRound, Waypoints, BookOpenCheck } from "lucide-react";
 
 
-export const dataCartsSummary = [
+const dataCartsSummary = [
   {
     icon: UsersRound,
     total: "12.450",

@@ -10,8 +10,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
 import { DateSelectArg, EventContentArg, EventClickArg  } from '@fullcalendar/core/index.js'
 
-import axios from 'axios' 
-import { formatDate} from '@/lib/formatDate'
+import axios from 'axios'
 import { toast } from 'sonner'
 
 import {Company, Event} from '@prisma/client'
@@ -58,7 +57,7 @@ export function Calendar(props: CalendarPros) {
                 router.refresh()
             })
             .catch(error => {
-                toast.error("Problem!!")
+                toast.error(`Problem!! ${error.message || "Unknown error"}`);
             })
             .finally(() => {
                 setNewEvent({ eventName: "", companySelected: { name: "", id: "" } });
@@ -73,11 +72,7 @@ export function Calendar(props: CalendarPros) {
             `Are you sure you want to eliminate this event ${selected.event.title}`
         )){
             try {
-                // Extract both IDs needed for the API route
                 const eventId = selected.event.id;
-                
-                // Check how companyId is stored in your event object
-                // It might be in extendedProps or directly on the event
                 const companyId = selected.event.extendedProps?.companyId;
                 
                 if (!companyId) {
@@ -91,7 +86,12 @@ export function Calendar(props: CalendarPros) {
                 toast.success("Event delate!!")
                 router.refresh()
             } catch (error) {
-                toast.error("Problem!!")
+                // Verificar y mostrar el error de manera segura
+                if (error instanceof Error) {
+                    toast.error(`Problem!! ${error.message}`);
+                } else {
+                    toast.error("Unknown error");
+                }
             }
         }
     }

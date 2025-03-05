@@ -9,7 +9,7 @@ interface CompanyInfomationProps {
   company: Company
 }
 
-export function CompanyInfomation(props: CompanyInfomationProps) {
+export function CompanyInformation(props: CompanyInfomationProps) {
     const {company} = props
   return (
     <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4'>

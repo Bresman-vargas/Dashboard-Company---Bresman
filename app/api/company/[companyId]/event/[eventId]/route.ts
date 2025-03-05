@@ -1,8 +1,11 @@
-import {db} from '@/lib/db';
-import {auth} from '@clerk/nextjs/server'
-import { NextResponse} from 'next/server';
+import { db } from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-export async function DELETE(req: Request, { params }: { params: { companyId: string, eventId: string } }) {
+export async function DELETE(
+    req: Request, 
+    context: { params: Promise<{ companyId: string; eventId: string }> } // `params` is a Promise
+) {
     try {
         const { userId } = await auth();
 
@@ -10,10 +13,10 @@ export async function DELETE(req: Request, { params }: { params: { companyId: st
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
+        const { eventId } = await context.params;  // Await the params to extract eventId
+
         const deletedEvent = await db.event.delete({
-            where: {
-                id: params.eventId
-            }
+            where: { id: eventId }
         });
 
         return NextResponse.json(deletedEvent);
@@ -22,3 +25,4 @@ export async function DELETE(req: Request, { params }: { params: { companyId: st
         return new NextResponse("Internal Error", { status: 500 });
     }
 }
+
